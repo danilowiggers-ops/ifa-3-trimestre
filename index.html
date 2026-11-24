@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tubos Sonoros e Ondas Estacionárias | Física & Música</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           VARIÁVEIS DE CORES (PALETA AZUL E CINZA) E TIPOGRAFIA
+           ========================================================================== */
+        :root {
+            --blue-50: #eff6ff;
+            --blue-100: #dbeafe;
+            --blue-200: #bfdbfe;
+            --blue-300: #93c5fd;
+            --blue-400: #60a5fa;
+            --blue-500: #3b82f6;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --blue-800: #1e40af;
+            --blue-900: #1e3a8a;
+
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --gray-950: #020617;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+        }
+
+        /* ==========================================================================
+           RESET E ESTILOS GLOBAIS
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+        }
+
+        /* ==========================================================================
+           CABEÇALHO E NAVEGAÇÃO (100% CSS)
+           ========================================================================== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--gray-800);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(2, 6, 23, 0.15);
+        }
+
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4.25rem;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.65rem;
+            background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+        }
+
+        .brand span span {
+            color: var(--blue-400);
+        }
+
+        /* Controle de Menu Mobile sem JavaScript (Checkbox Hack) */
+        #nav-toggle {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            display: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            color: var(--gray-300);
+            border: 1px solid var(--gray-700);
+        }
+
+        .nav-toggle-label:hover {
+            background-color: var(--gray-800);
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .nav-links a {
+            padding: 0.5rem 0.85rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-300);
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--gray-800);
+            color: #ffffff;
+        }
+
+        .nav-links a.nav-highlight {
+            background-color: rgba(37, 99, 235, 0.2);
+            color: var(--blue-300);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+        }
+
+        .nav-links a.nav-highlight:hover {
+            background-color: var(--blue-600);
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        .hero {
+            background: linear-gradient(180deg, var(--gray-900) 0%, var(--gray-800) 60%, var(--gray-900) 100%);
+            color: #ffffff;
+            padding: 4.5rem 0 5rem;
+            border-bottom: 1px solid var(--gray-700);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            background-color: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            color: var(--blue-300);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+            max-width: 900px;
+            margin: 0 auto 1.25rem;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--blue-400), var(--blue-200));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 740px;
+            margin: 0 auto 2rem;
+            color: var(--gray-300);
+            font-size: clamp(1rem, 2vw, 1.175rem);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.6rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.15s, background-color 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: var(--blue-600);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--blue-500);
+        }
+
+        .btn-secondary {
+            background-color: var(--gray-800);
+            color: var(--gray-200);
+            border: 1px solid var(--gray-600);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--gray-700);
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           SEÇÕES PRINCIPAIS E CARTÕES
+           ========================================================================== */
+        main {
+            padding: 3.5rem 0 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4.5rem;
+        }
+
+        section {
+            scroll-margin-top: 5.5rem;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+            overflow: hidden;
+        }
+
+        .card-header-gradient {
+            background: linear-gradient(135deg, var(--gray-800), var(--blue-900));
+            padding: 1.75rem 2rem;
+            color: #ffffff;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .section-kicker {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--blue-300);
+            margin-bottom: 0.25rem;
+        }
+
+        .section-kicker-dark {
+            color: var(--blue-600);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            line-height: 1.25;
+        }
+
+        .author-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            background-color: rgba(51, 65, 85, 0.85);
+            color: var(--gray-100);
+            border: 1px solid var(--gray-600);
+        }
+
+        .author-pill-light {
+            background-color: var(--gray-200);
+            color: var(--gray-800);
+            border: 1px solid var(--gray-300);
+        }
+
+        .section-header-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 2rem;
+        }
+
+        /* ==========================================================================
+           SEÇÃO 1: O QUE SÃO TUBOS SONOROS (FELIPE)
+           ========================================================================== */
+        .grid-conceito {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            align-items: center;
+        }
+
+        .text-content p {
+            color: var(--gray-600);
+            margin-bottom: 1.15rem;
+            font-size: 1.02rem;
+        }
+
+        .text-content strong {
+            color: var(--gray-900);
+        }
+
+        .highlight-inline {
+            background-color: var(--blue-50);
+            color: var(--blue-800);
+            font-weight: 600;
+            padding: 0.1rem 0.45rem;
+            border-radius: 0.35rem;
+        }
+
+        .callout-box {
+            background-color: var(--gray-100);
+            border-left: 4px solid var(--blue-600);
+            padding: 1.15rem 1.25rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin-top: 1rem;
+        }
+
+        .callout-box h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-900);
+            margin-bottom: 0.35rem;
+        }
+
+        .callout-box p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: var(--gray-700);
+        }
+
+        .diagram-dark-box {
+            background-color: var(--gray-900);
+            border: 1px solid var(--gray-700);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            color: #ffffff;
+        }
+
+        .diagram-dark-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--blue-300);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dot-pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--blue-400);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(0.85); }
+        }
+
+        .svg-frame-dark {
+            background-color: var(--gray-950);
+            border: 1px solid var(--gray-800);
+            border-radius: var(--radius-md);
+            padding: 0.75rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .diagram-caption {
+            font-size: 0.83rem;
+            color: var(--gray-400);
+        }
+
+        /* ==========================================================================
+           SEÇÃO 2: NÓS E VENTRES (CAPOT & FELIPE)
+           ========================================================================== */
+        .definitions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .def-card {
+            border-radius: var(--radius-lg);
+            padding: 1.35rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            color: #ffffff;
+        }
+
+        .def-card-node {
+            background-color: var(--gray-800);
+            border: 1px solid var(--gray-700);
+        }
+
+        .def-card-antinode {
+            background-color: var(--blue-900);
+            border: 1px solid var(--blue-700);
+        }
+
+        .def-badge {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 0.65rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .def-card-node .def-badge {
+            background-color: var(--gray-700);
+            border: 1px solid var(--gray-500);
+            color: var(--gray-100);
+        }
+
+        .def-card-antinode .def-badge {
+            background-color: var(--blue-700);
+            border: 1px solid var(--blue-400);
+            color: #ffffff;
+        }
+
+        .def-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .def-card p {
+            font-size: 0.9rem;
+            color: var(--gray-300);
+        }
+
+        .tubes-comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .tube-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s;
+        }
+
+        .tube-card:hover {
+            border-color: var(--blue-400);
+        }
+
+        .tube-card-head-blue {
+            background-color: var(--blue-600);
+            color: #ffffff;
+            padding: 1.35rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .tube-card-head-gray {
+            background-color: var(--gray-800);
+            color: #ffffff;
+            padding: 1.35rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .tube-card-head-blue p {
+            color: var(--blue-100);
+            font-size: 0.875rem;
+        }
+
+        .tube-card-head-gray p {
+            color: var(--gray-300);
+            font-size: 0.875rem;
+        }
+
+        .harmonic-tag {
+            padding: 0.3rem 0.65rem;
+            border-radius: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 600;
+            background-color: rgba(15, 23, 42, 0.45);
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .tube-card-body {
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.35rem;
+        }
+
+        .svg-frame-light {
+            background-color: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+        }
+
+        .svg-frame-label {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .step-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            font-size: 0.96rem;
+            color: var(--gray-600);
+        }
+
+        .step-num-blue, .step-num-gray {
+            width: 1.65rem;
+            height: 1.65rem;
+            border-radius: 50%;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 0.15rem;
+        }
+
+        .step-num-blue {
+            background-color: var(--blue-100);
+            color: var(--blue-700);
+        }
+
+        .step-num-gray {
+            background-color: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .code-pill {
+            font-family: var(--font-mono);
+            background-color: var(--gray-100);
+            color: var(--gray-900);
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.35rem;
+            font-size: 0.88em;
+            font-weight: 600;
+        }
+
+        .tube-card-footer {
+            background-color: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            padding: 1rem 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .formula-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--gray-500);
+        }
+
+        .formula-badge-blue {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--blue-700);
+            background-color: var(--blue-50);
+            border: 1px solid var(--blue-200);
+            padding: 0.3rem 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .formula-badge-gray {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--gray-800);
+            background-color: var(--gray-200);
+            border: 1px solid var(--gray-300);
+            padding: 0.3rem 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        /* ==========================================================================
+           SEÇÃO 3: EXPLORADOR INTERATIVO DE HARMÔNICOS (100% CSS RADIO TABS)
+           ========================================================================== */
+        .explorer-section {
+            background-color: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            color: #ffffff;
+            box-shadow: 0 12px 30px rgba(2, 6, 23, 0.25);
+        }
+
+        .explorer-header {
+            border-bottom: 1px solid var(--gray-800);
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .explorer-header h2 {
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            font-weight: 800;
+            margin-top: 0.25rem;
+        }
+
+        .explorer-header p {
+            color: var(--gray-400);
+            font-size: 0.95rem;
+            margin-top: 0.35rem;
+        }
+
+        /* Oculta inputs radio nativos */
+        .tab-radio {
+            display: none;
+        }
+
+        .tab-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .tab-label {
+            cursor: pointer;
+            padding: 0.7rem 1.35rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.92rem;
+            background-color: var(--gray-800);
+            color: var(--gray-300);
+            border: 1px solid var(--gray-700);
+            transition: all 0.2s;
+        }
+
+        .tab-label:hover {
+            background-color: var(--gray-700);
+            color: #ffffff;
+        }
+
+        #tab-open:checked ~ .tab-controls label[for="tab-open"],
+        #tab-closed:checked ~ .tab-controls label[for="tab-closed"] {
+            background-color: var(--blue-600);
+            color: #ffffff;
+            border-color: var(--blue-400);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #tab-open:checked ~ .panels-wrapper .panel-open,
+        #tab-closed:checked ~ .panels-wrapper .panel-closed {
+            display: block;
+        }
+
+        .harmonics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .harmonic-item {
+            background-color: var(--gray-950);
+            border: 1px solid var(--gray-800);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+        }
+
+        .harmonic-item-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+        }
+
+        .harmonic-item-title {
+            font-weight: 700;
+            color: var(--blue-300);
+        }
+
+        .harmonic-item-eq {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            background-color: var(--gray-800);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.35rem;
+        }
+
+        .harmonic-item-desc {
+            margin-top: 0.75rem;
+            font-size: 0.82rem;
+            color: var(--gray-400);
+        }
+
+        /* ==========================================================================
+           SEÇÃO 4: COMPRIMENTO DO TUBO E TABELA (THAYLA E DANILO)
+           ========================================================================== */
+        .length-section-body {
+            padding: 2rem;
+        }
+
+        .length-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .mini-cards-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .mini-card {
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 1.1rem;
+        }
+
+        .mini-card h4 {
+            font-size: 0.92rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .mini-card-blue h4 { color: var(--blue-700); }
+        .mini-card-gray h4 { color: var(--gray-800); }
+
+        .mini-card p {
+            font-size: 0.88rem;
+            color: var(--gray-600);
+            margin: 0;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        thead tr {
+            background-color: var(--gray-800);
+            color: #ffffff;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        th, td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: var(--gray-50);
+        }
+
+        .td-title {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .td-blue {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--blue-700);
+        }
+
+        .td-gray {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        /* ==========================================================================
+           SEÇÃO 5: INSTRUMENTOS DE SOPRO (RAFA)
+           ========================================================================== */
+        .instruments-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+
+        .instrument-card {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .instrument-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+        }
+
+        .inst-banner {
+            padding: 1.5rem;
+            color: #ffffff;
+        }
+
+        .inst-banner-flute {
+            background: linear-gradient(135deg, var(--blue-700), var(--blue-900));
+        }
+
+        .inst-banner-clarinet {
+            background: linear-gradient(135deg, var(--gray-800), var(--gray-950));
+        }
+
+        .inst-banner-organ {
+            background: linear-gradient(135deg, var(--gray-700), var(--blue-800));
+        }
+
+        .inst-banner-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.85rem;
+        }
+
+        .inst-tag {
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .inst-banner h3 {
+            font-size: 1.45rem;
+            font-weight: 800;
+        }
+
+        .inst-banner p {
+            font-size: 0.875rem;
+            color: var(--blue-200);
+            margin-top: 0.2rem;
+        }
+
+        .inst-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            flex: 1;
+        }
+
+        .inst-block h4 {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--blue-700);
+            margin-bottom: 0.35rem;
+        }
+
+        .inst-banner-clarinet + .inst-body .inst-block h4 {
+            color: var(--gray-800);
+        }
+
+        .inst-block p {
+            font-size: 0.93rem;
+            color: var(--gray-600);
+        }
+
+        .inst-note {
+            margin-top: 0.65rem;
+            padding: 0.65rem 0.85rem;
+            border-radius: var(--radius-md);
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            font-size: 0.84rem;
+            color: var(--gray-700);
+        }
+
+        .organ-sublist {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .organ-subitem-gray {
+            background-color: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            color: var(--gray-600);
+        }
+
+        .organ-subitem-blue {
+            background-color: var(--blue-50);
+            border: 1px solid var(--blue-200);
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            color: var(--gray-700);
+        }
+
+        .organ-subitem-gray strong,
+        .organ-subitem-blue strong {
+            display: block;
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+            color: var(--gray-900);
+        }
+
+        /* ==========================================================================
+           RODAPÉ (CRÉDITOS E FONTES)
+           ========================================================================== */
+        footer {
+            background-color: var(--gray-900);
+            color: var(--gray-300);
+            border-top: 1px solid var(--gray-800);
+            padding: 3.5rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--blue-500);
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            color: var(--gray-400);
+        }
+
+        footer h4 {
+            color: #ffffff;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.85rem;
+        }
+
+        .footer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray-400);
+        }
+
+        .footer-list strong {
+            color: var(--gray-200);
+        }
+
+        .footer-list a {
+            color: var(--blue-400);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .footer-list a:hover {
+            color: var(--blue-300);
+        }
+
+        .footer-bottom {
+            padding-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        /* ==========================================================================
+           RESPONSIVIDADE (TABLET E MOBILE)
+           ========================================================================== */
+        @media (max-width: 960px) {
+            .grid-conceito,
+            .length-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .harmonics-grid,
+            .instruments-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle-label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                background-color: var(--gray-900);
+                padding: 0.75rem 0 1.25rem;
+                border-top: 1px solid var(--gray-800);
+            }
+
+            #nav-toggle:checked ~ .nav-links {
+                display: flex;
+            }
+
+            .definitions-grid,
+            .tubes-comparison-grid,
+            .mini-cards-row {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header-gradient,
+            .grid-conceito,
+            .length-section-body,
+            .explorer-section {
+                padding: 1.35rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho e Navegação 100% HTML e CSS -->
+    <header class="navbar">
+        <div class="container navbar-inner">
+            <a href="#" class="brand">
+                <div class="brand-icon">
+                    <svg width="20" height="20" fill="none" stroke="#ffffff" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                    </svg>
+                </div>
+                <span>Acústica<span>Física</span></span>
+            </a>
+
+            <!-- Toggle Mobile puro em CSS -->
+            <input type="checkbox" id="nav-toggle" aria-label="Abrir menu de navegação">
+            <label for="nav-toggle" class="nav-toggle-label" title="Menu">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </label>
+
+            <nav class="nav-links">
+                <a href="#conceito">O que são</a>
+                <a href="#nos-ventres">Nós e Ventres</a>
+                <a href="#harmonicos" class="nav-highlight">Modos de Vibração</a>
+                <a href="#comprimento">Comprimento &amp; Notas</a>
+                <a href="#instrumentos">Instrumentos</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção Hero -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-badge">Física Ondulatória • Acústica Musical</span>
+            <h1>Tubos Sonoros e <span>Ondas Estacionárias</span> em Instrumentos Musicais</h1>
+            <p>
+                Entenda como a vibração de colunas de ar, a formação de nós e ventres e o comprimento dos tubos determinam as notas musicais e o timbre da flauta, do clarinete e do órgão de tubos.
+            </p>
+            <div class="hero-actions">
+                <a href="#harmonicos" class="btn btn-primary">Ver Diagramas de Harmônicos</a>
+                <a href="#conceito" class="btn btn-secondary">Explorar Conteúdo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+
+        <!-- SEÇÃO 1: O que são Tubos Sonoros (Felipe) -->
+        <section id="conceito">
+            <div class="card">
+                <div class="card-header-gradient">
+                    <div>
+                        <span class="section-kicker">Fundamentos da Acústica</span>
+                        <h2 class="section-title">O que são Tubos Sonoros?</h2>
+                    </div>
+                    <span class="author-pill">Por: Felipe</span>
+                </div>
+
+                <div class="grid-conceito">
+                    <div class="text-content">
+                        <p>
+                            É sabido que a física está em praticamente tudo que fazemos no cotidiano. Em alguns momentos ouvimos sons produzidos por alguns instrumentos — <strong>de sopro, por exemplo</strong>. Eles se parecem com tubos, abertos nas duas extremidades ou abertos em uma e fechados na outra.
+                        </p>
+                        <p>
+                            Assim, podemos dizer que um <strong>tubo sonoro</strong> é basicamente uma <span class="highlight-inline">coluna de ar onde são produzidas ondas estacionárias longitudinais</span>. Essas ondas são produzidas pela superposição de ondas de pressão que são geradas em uma extremidade com as ondas refletidas na outra extremidade.
+                        </p>
+                        <div class="callout-box">
+                            <h3>O Papel da Embocadura</h3>
+                            <p>
+                                As ondas de pressão produzidas numa extremidade ocorrem em razão de um dispositivo chamado <strong>embocadura</strong>. O jato de ar que adentra o tubo é dirigido contra a embocadura, assim ele vai se afunilando, determinando a vibração que dá origem às ondas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="diagram-dark-box">
+                        <div class="diagram-dark-title">
+                            <span class="dot-pulse"></span>
+                            Mecanismo de Formação Sonora
+                        </div>
+                        <div class="svg-frame-dark">
+                            <svg viewBox="0 0 360 185" width="100%" height="auto">
+                                <!-- Fluxo de sopro -->
+                                <path d="M 15 62 Q 45 72, 70 82" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-dasharray="4 3"/>
+                                <polygon points="72,83 63,77 65,85" fill="#60a5fa"/>
+                                <text x="12" y="52" fill="#93c5fd" font-size="11" font-family="Inter, sans-serif">Jato de Ar</text>
+                                
+                                <!-- Embocadura -->
+                                <rect x="65" y="72" width="14" height="40" rx="3" fill="#475569" stroke="#94a3b8"/>
+                                <text x="42" y="132" fill="#cbd5e1" font-size="11" font-family="Inter, sans-serif">Embocadura</text>
+
+                                <!-- Corpo do Tubo -->
+                                <line x1="79" y1="67" x2="330" y2="67" stroke="#94a3b8" stroke-width="3"/>
+                                <line x1="79" y1="117" x2="330" y2="117" stroke="#94a3b8" stroke-width="3"/>
+
+                                <!-- Onda incidente (Azul) -->
+                                <path d="M 85 92 Q 115 69, 145 92 T 205 92 T 265 92 T 325 92" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                <!-- Onda refletida (Cinza tracejado) -->
+                                <path d="M 85 92 Q 115 115, 145 92 T 205 92 T 265 92 T 325 92" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 3"/>
+
+                                <!-- Legenda interna -->
+                                <circle cx="95" cy="158" r="4" fill="#3b82f6"/>
+                                <text x="105" y="162" fill="#e2e8f0" font-size="10" font-family="Inter, sans-serif">Onda Incidente</text>
+                                
+                                <circle cx="215" cy="158" r="4" fill="#94a3b8"/>
+                                <text x="225" y="162" fill="#cbd5e1" font-size="10" font-family="Inter, sans-serif">Onda Refletida</text>
+                            </svg>
+                        </div>
+                        <p class="diagram-caption">
+                            A superposição entre a onda incidente e a onda refletida estabelece ondas estacionárias com pontos de repouso (<strong style="color:#e2e8f0;">nós</strong>) e máxima vibração (<strong style="color:#93c5fd;">ventres</strong>).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: Como se formam os Nós e Ventres (Capot & Felipe) -->
+        <section id="nos-ventres">
+            <div class="section-header-bar">
+                <div>
+                    <span class="section-kicker section-kicker-dark">Comportamento das Ondas</span>
+                    <h2 class="section-title" style="color: var(--gray-900);">Como se Formam os Nós e Ventres</h2>
+                </div>
+                <span class="author-pill author-pill-light">Por: Capot &amp; Felipe</span>
+            </div>
+
+            <!-- Conceitos de Nó e Ventre -->
+            <div class="definitions-grid">
+                <div class="def-card def-card-node">
+                    <div class="def-badge">NÓ</div>
+                    <div>
+                        <h3>Nó (Nodo de Deslocamento)</h3>
+                        <p>Região onde o deslocamento das partículas de ar é nulo (repouso), ocorrendo sempre em extremidades fechadas (parede rígida) e em pontos internos de interferência destrutiva.</p>
+                    </div>
+                </div>
+                <div class="def-card def-card-antinode">
+                    <div class="def-badge">V</div>
+                    <div>
+                        <h3>Ventre (Antinodo)</h3>
+                        <p>Região de máxima amplitude de vibração do ar. Forma-se obrigatoriamente nas extremidades abertas do tubo, onde o ar vibra livremente em contato com a atmosfera.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparativo Tubos Abertos vs Tubos Fechados -->
+            <div class="tubes-comparison-grid">
+                
+                <!-- Card Tubos Abertos -->
+                <article class="card tube-card">
+                    <div>
+                        <div class="tube-card-head-blue">
+                            <div>
+                                <h3>Tubos Abertos</h3>
+                                <p>Duas pontas abertas</p>
+                            </div>
+                            <span class="harmonic-tag">n = 1, 2, 3, 4...</span>
+                        </div>
+
+                        <div class="tube-card-body">
+                            <div class="svg-frame-light">
+                                <div class="svg-frame-label">1º Harmônico (Fundamental) — L = λ / 2</div>
+                                <svg viewBox="0 0 320 110" width="100%" height="auto">
+                                    <line x1="45" y1="25" x2="275" y2="25" stroke="#334155" stroke-width="3"/>
+                                    <line x1="45" y1="85" x2="275" y2="85" stroke="#334155" stroke-width="3"/>
+                                    <path d="M 45 30 Q 160 55, 275 30" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+                                    <path d="M 45 80 Q 160 55, 275 80" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="4 3"/>
+                                    <circle cx="160" cy="55" r="5" fill="#0f172a"/>
+                                    <text x="160" y="102" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="bold">Nó</text>
+                                    <text x="23" y="59" text-anchor="middle" fill="#2563eb" font-size="11" font-weight="bold">Ventre</text>
+                                    <text x="297" y="59" text-anchor="middle" fill="#2563eb" font-size="11" font-weight="bold">Ventre</text>
+                                </svg>
+                            </div>
+
+                            <ul class="step-list">
+                                <li>
+                                    <span class="step-num-blue">1</span>
+                                    <div>
+                                        <strong>Pontas:</strong> Formam-se <span style="color: var(--blue-700); font-weight: 600;">ventres em ambas as extremidades</span>, pois o ar vibra livremente em contato com a atmosfera.
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="step-num-blue">2</span>
+                                    <div>
+                                        <strong>Interior:</strong> Alternam-se nós e ventres ao longo do comprimento <span class="mono">L</span>. No 1º harmônico, há <strong>1 nó no centro</strong> e ventres nas pontas (<span class="code-pill">L = λ/2</span>).
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="step-num-blue">3</span>
+                                    <div>
+                                        <strong>Harmônicos Produzidos:</strong> Produzem <strong>todos os harmônicos</strong> (pares e ímpares: <span class="mono">n = 1, 2, 3, ...</span>).
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tube-card-footer">
+                        <span class="formula-label">Frequências Naturais:</span>
+                        <span class="formula-badge-blue">fₙ = n · (v / 2L)</span>
+                    </div>
+                </article>
+
+                <!-- Card Tubos Fechados -->
+                <article class="card tube-card">
+                    <div>
+                        <div class="tube-card-head-gray">
+                            <div>
+                                <h3>Tubos Fechados</h3>
+                                <p>Uma ponta aberta e uma fechada</p>
+                            </div>
+                            <span class="harmonic-tag">i = 1, 3, 5, 7...</span>
+                        </div>
+
+                        <div class="tube-card-body">
+                            <div class="svg-frame-light">
+                                <div class="svg-frame-label">1º Harmônico (Fundamental) — L = λ / 4</div>
+                                <svg viewBox="0 0 320 110" width="100%" height="auto">
+                                    <line x1="45" y1="25" x2="275" y2="25" stroke="#334155" stroke-width="3"/>
+                                    <line x1="45" y1="85" x2="275" y2="85" stroke="#334155" stroke-width="3"/>
+                                    <line x1="275" y1="23.5" x2="275" y2="86.5" stroke="#0f172a" stroke-width="5"/>
+                                    <path d="M 45 30 Q 160 32, 275 55" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+                                    <path d="M 45 80 Q 160 78, 275 55" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="4 3"/>
+                                    <circle cx="275" cy="55" r="5" fill="#0f172a"/>
+                                    <text x="295" y="59" text-anchor="middle" fill="#0f172a" font-size="11" font-weight="bold">Nó</text>
+                                    <text x="23" y="59" text-anchor="middle" fill="#2563eb" font-size="11" font-weight="bold">Ventre</text>
+                                </svg>
+                            </div>
+
+                            <ul class="step-list">
+                                <li>
+                                    <span class="step-num-gray">1</span>
+                                    <div>
+                                        <strong>Pontas:</strong> Forma-se um <span style="color: var(--blue-700); font-weight: 600;">ventre na extremidade aberta</span> (livre movimentação do ar) e um <strong>nó na extremidade fechada</strong> (ar impedido de se deslocar pela parede).
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="step-num-gray">2</span>
+                                    <div>
+                                        <strong>Interior:</strong> No 1º harmônico, há apenas <strong>1 nó no fundo e 1 ventre na abertura</strong> (<span class="code-pill">L = λ/4</span>). Nos modos seguintes, há aumento apenas do número de nós intermediários.
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="step-num-gray">3</span>
+                                    <div>
+                                        <strong>Apenas Harmônicos Ímpares:</strong> Produzem somente harmônicos ímpares (<span class="mono">i = 1, 3, 5, 7, ...</span>). <strong>Não emitem harmônico de ordem par.</strong>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tube-card-footer">
+                        <span class="formula-label">Frequências Naturais:</span>
+                        <span class="formula-badge-gray">fᵢ = i · (v / 4L) &nbsp;(i ímpar)</span>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: Explorador Visual Interativo (100% CSS sem JavaScript) -->
+        <section id="harmonicos" class="explorer-section">
+            <div class="explorer-header">
+                <span class="section-kicker">Visualização Comparativa</span>
+                <h2>Modos de Vibração e Série Harmônica</h2>
+                <p>Selecione o tipo de tubo abaixo para visualizar a distribuição dos nós (N) e ventres (V) nos primeiros modos de vibração.</p>
+            </div>
+
+            <!-- Abas 100% CSS -->
+            <input type="radio" name="tube-tabs" id="tab-open" class="tab-radio" checked>
+            <input type="radio" name="tube-tabs" id="tab-closed" class="tab-radio">
+
+            <div class="tab-controls">
+                <label for="tab-open" class="tab-label">Tubo Aberto (n = 1, 2, 3...)</label>
+                <label for="tab-closed" class="tab-label">Tubo Fechado (i = 1, 3, 5...)</label>
+            </div>
+
+            <div class="panels-wrapper">
+                <!-- Painel Tubo Aberto -->
+                <div class="tab-panel panel-open">
+                    <div class="harmonics-grid">
+                        <!-- 1º Harmônico -->
+                        <div class="harmonic-item">
+                            <div class="harmonic-item-top">
+                                <span class="harmonic-item-title">1º Harmônico (n = 1)</span>
+                                <span class="harmonic-item-eq">L = λ / 2</span>
+                            </div>
+                            <svg viewBox="0 0 280 95" width="100%" height="auto">
+                                <line x1="25" y1="20" x2="255" y2="20" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="25" y1="75" x2="255" y2="75" stroke="#94a3b8" stroke-width="2.5"/>
+                                <path d="M 25 24 Q 140 47.5, 255 24" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                <path d="M 25 71 Q 140 47.5, 255 71" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 3"/>
+                                <circle cx="140" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <text x="140" y="90" text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="monospace">1 Nó • 2 Ventres</text>
+                            </svg>
+                            <p class="harmonic-item-desc">Frequência fundamental (<span class="mono">f₁ = v / 2L</span>). Um nó central e dois ventres nas extremidades.</p>
+                        </div>
+
+                        <!-- 2º Harmônico -->
+                        <div class="harmonic-item">
+                            <div class="harmonic-item-top">
+                                <span class="harmonic-item-title">2º Harmônico (n = 2)</span>
+                                <span class="harmonic-item-eq">L = 2λ / 2 = λ</span>
+                            </div>
+                            <svg viewBox="0 0 280 95" width="100%" height="auto">
+                                <line x1="25" y1="20" x2="255" y2="20" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="25" y1="75" x2="255" y2="75" stroke="#94a3b8" stroke-width="2.5"/>
+                                <path d="M 25 24 Q 82.5 47.5, 140 71 Q 197.5 47.5, 255 24" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                <path d="M 25 71 Q 82.5 47.5, 140 24 Q 197.5 47.5, 255 71" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 3"/>
+                                <circle cx="82.5" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <circle cx="197.5" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <text x="140" y="90" text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="monospace">2 Nós • 3 Ventres</text>
+                            </svg>
+                            <p class="harmonic-item-desc">Primeira oitava acima (<span class="mono">f₂ = 2f₁</span>). Tubos abertos emitem harmônicos pares normalmente.</p>
+                        </div>
+
+                        <!-- 3º Harmônico -->
+                        <div class="harmonic-item">
+                            <div class="harmonic-item-top">
+                                <span class="harmonic-item-title">3º Harmônico (n = 3)</span>
+                                <span class="harmonic-item-eq">L = 3λ / 2</span>
+                            </div>
+                            <svg viewBox="0 0 280 95" width="100%" height="auto">
+                                <line x1="25" y1="20" x2="255" y2="20" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="25" y1="75" x2="255" y2="75" stroke="#94a3b8" stroke-width="2.5"/>
+                                <path d="M 25 24 Q 63 47.5, 101.6 71 Q 140 47.5, 178.3 24 Q 216 47.5, 255 71" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                <path d="M 25 71 Q 63 47.5, 101.6 24 Q 140 47.5, 178.3 71 Q 216 47.5, 255 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 3"/>
+                                <circle cx="63.3" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <circle cx="140" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <circle cx="216.6" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <text x="140" y="90" text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="monospace">3 Nós • 4 Ventres</text>
+                            </svg>
+                            <p class="harmonic-item-desc">Terceiro modo de vibração (<span class="mono">f₃ = 3f₁</span>). Três nós internos e quatro ventres.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Painel Tubo Fechado -->
+                <div class="tab-panel panel-closed">
+                    <div class="harmonics-grid">
+                        <!-- 1º Harmônico -->
+                        <div class="harmonic-item">
+                            <div class="harmonic-item-top">
+                                <span class="harmonic-item-title">1º Harmônico (i = 1)</span>
+                                <span class="harmonic-item-eq">L = λ / 4</span>
+                            </div>
+                            <svg viewBox="0 0 280 95" width="100%" height="auto">
+                                <line x1="25" y1="20" x2="255" y2="20" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="25" y1="75" x2="255" y2="75" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="255" y1="19" x2="255" y2="76" stroke="#f8fafc" stroke-width="4.5"/>
+                                <path d="M 25 24 Q 140 26, 255 47.5" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                <path d="M 25 71 Q 140 69, 255 47.5" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 3"/>
+                                <circle cx="255" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <text x="140" y="90" text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="monospace">1 Nó • 1 Ventre</text>
+                            </svg>
+                            <p class="harmonic-item-desc">Frequência fundamental (<span class="mono">f₁ = v / 4L</span>). Distância entre ventre e nó equivale a <span class="mono">λ/4</span>.</p>
+                        </div>
+
+                        <!-- 3º Harmônico -->
+                        <div class="harmonic-item">
+                            <div class="harmonic-item-top">
+                                <span class="harmonic-item-title">3º Harmônico (i = 3)</span>
+                                <span class="harmonic-item-eq">L = 3λ / 4</span>
+                            </div>
+                            <svg viewBox="0 0 280 95" width="100%" height="auto">
+                                <line x1="25" y1="20" x2="255" y2="20" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="25" y1="75" x2="255" y2="75" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="255" y1="19" x2="255" y2="76" stroke="#f8fafc" stroke-width="4.5"/>
+                                <path d="M 25 24 Q 63 24, 101.6 47.5 Q 140 71, 178.3 71 Q 216 71, 255 47.5" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                <path d="M 25 71 Q 63 71, 101.6 47.5 Q 140 24, 178.3 24 Q 216 24, 255 47.5" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 3"/>
+                                <circle cx="101.6" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <circle cx="255" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <text x="140" y="90" text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="monospace">2 Nós • 2 Ventres</text>
+                            </svg>
+                            <p class="harmonic-item-desc">Salta direto para o 3º harmônico (<span class="mono">f₃ = 3f₁</span>). Não existe 2º harmônico em tubo fechado.</p>
+                        </div>
+
+                        <!-- 5º Harmônico -->
+                        <div class="harmonic-item">
+                            <div class="harmonic-item-top">
+                                <span class="harmonic-item-title">5º Harmônico (i = 5)</span>
+                                <span class="harmonic-item-eq">L = 5λ / 4</span>
+                            </div>
+                            <svg viewBox="0 0 280 95" width="100%" height="auto">
+                                <line x1="25" y1="20" x2="255" y2="20" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="25" y1="75" x2="255" y2="75" stroke="#94a3b8" stroke-width="2.5"/>
+                                <line x1="255" y1="19" x2="255" y2="76" stroke="#f8fafc" stroke-width="4.5"/>
+                                <path d="M 25 24 Q 48 24, 71 47.5 Q 94 71, 117 71 Q 140 71, 163 47.5 Q 186 24, 209 24 Q 232 24, 255 47.5" fill="none" stroke="#3b82f6" stroke-width="2.5"/>
+                                <path d="M 25 71 Q 48 71, 71 47.5 Q 94 24, 117 24 Q 140 24, 163 47.5 Q 186 71, 209 71 Q 232 71, 255 47.5" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="4 3"/>
+                                <circle cx="71" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <circle cx="163" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <circle cx="255" cy="47.5" r="4.5" fill="#93c5fd"/>
+                                <text x="140" y="90" text-anchor="middle" fill="#cbd5e1" font-size="10" font-family="monospace">3 Nós • 3 Ventres</text>
+                            </svg>
+                            <p class="harmonic-item-desc">Quinto harmônico (<span class="mono">f₅ = 5f₁</span>). Apenas múltiplos ímpares de <span class="mono">v / 4L</span> são emitidos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: Relação entre o Comprimento do Tubo (Thayla e Danilo) -->
+        <section id="comprimento">
+            <div class="card">
+                <div class="length-section-body">
+                    <div class="section-header-bar">
+                        <div>
+                            <span class="section-kicker section-kicker-dark">Matemática das Ondas</span>
+                            <h2 class="section-title" style="color: var(--gray-900);">Relação entre o Comprimento do Tubo (L) e o Comprimento de Onda (λ)</h2>
+                        </div>
+                        <span class="author-pill author-pill-light">Por: Thayla &amp; Danilo</span>
+                    </div>
+
+                    <div class="length-grid">
+                        <div class="text-content">
+                            <p>
+                                A relação entre o <strong>comprimento do tubo (<span class="mono">L</span>)</strong> e o <strong style="color: var(--blue-700);">comprimento da onda sonora (<span class="mono">λ</span>)</strong> determina qual nota musical (frequência) o instrumento vai emitir. Essa relação muda completamente dependendo se o tubo é aberto ou fechado.
+                            </p>
+                            <p>
+                                Como a frequência de vibração é dada por <span class="code-pill">f = v / λ</span> (onde <span class="mono">v</span> é a velocidade do som no ar), alterar o comprimento efetivo <span class="mono">L</span> modifica diretamente a altura da nota produzida:
+                            </p>
+
+                            <div class="mini-cards-row">
+                                <div class="mini-card mini-card-blue">
+                                    <h4>Tubos Curtos (L menor)</h4>
+                                    <p>Comportam ondas de menor comprimento (<span class="mono">λ</span> menor), gerando <strong>frequências mais altas</strong> (notas agudas).</p>
+                                </div>
+                                <div class="mini-card mini-card-gray">
+                                    <h4>Tubos Longos (L maior)</h4>
+                                    <p>Comportam ondas de maior comprimento (<span class="mono">λ</span> maior), gerando <strong>frequências mais baixas</strong> (notas graves).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Propriedade</th>
+                                        <th style="color: var(--blue-300);">Tubo Aberto</th>
+                                        <th style="color: var(--gray-300);">Tubo Fechado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="td-title">1º Harmônico (L)</td>
+                                        <td class="td-blue">L = λ / 2</td>
+                                        <td class="td-gray">L = λ / 4</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-title">Comprimento do Tubo (L)</td>
+                                        <td class="td-blue">L = n · (λ / 2)</td>
+                                        <td class="td-gray">L = i · (λ / 4)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-title">Comprimento de Onda (λ)</td>
+                                        <td class="td-blue">λ = 2L / n</td>
+                                        <td class="td-gray">λ = 4L / i</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-title">Frequência Emitida (f)</td>
+                                        <td class="td-blue">f = n · (v / 2L)</td>
+                                        <td class="td-gray">f = i · (v / 4L)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-title">Harmônicos Permitidos</td>
+                                        <td>Todos (<span class="mono">n = 1, 2, 3, ...</span>)</td>
+                                        <td>Apenas ímpares (<span class="mono">i = 1, 3, 5, 7, ...</span>)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 5: Como isso se aplica a instrumentos de sopro (Rafa) -->
+        <section id="instrumentos">
+            <div class="section-header-bar">
+                <div>
+                    <span class="section-kicker section-kicker-dark">Na Prática Musical</span>
+                    <h2 class="section-title" style="color: var(--gray-900);">Como Isso se Aplica a Instrumentos de Sopro</h2>
+                </div>
+                <span class="author-pill author-pill-light">Por: Rafa</span>
+            </div>
+
+            <div class="instruments-grid">
+                
+                <!-- Flauta -->
+                <article class="card instrument-card">
+                    <div class="inst-banner inst-banner-flute">
+                        <div class="inst-banner-top">
+                            <span class="inst-tag">Tubo Aberto</span>
+                            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 19L19 3m-4 4l2 2m-5-1l2 2m-5-1l2 2m-5-1l2 2"/>
+                            </svg>
+                        </div>
+                        <h3>A Flauta</h3>
+                        <p>Flauta transversal e flauta doce</p>
+                    </div>
+
+                    <div class="inst-body">
+                        <div class="inst-block">
+                            <h4>Como funciona</h4>
+                            <p>
+                                Tanto a flauta transversal quanto a flauta doce comportam-se acusticamente como <strong>tubos abertos</strong> (possuem a embocadura e a extremidade distal abertas para a atmosfera).
+                            </p>
+                            <div class="inst-note">
+                                <strong>Exceção:</strong> As <em>flautas de Pã</em>, que são formadas por pequenos tubos fechados em uma das pontas.
+                            </div>
+                        </div>
+
+                        <div class="inst-block">
+                            <h4>Timbre</h4>
+                            <p>
+                                Por gerarem toda a série harmônica (pares e ímpares), as flautas possuem um som <strong>rico, brilhante e arejado</strong>.
+                            </p>
+                        </div>
+
+                        <div class="inst-block">
+                            <h4>Controle</h4>
+                            <p>
+                                O músico abre ou tampa os orifícios ao longo do corpo do instrumento (ou altera a pressão do sopro) para encurtar ou alongar efetivamente a coluna de ar vibrante, mudando a frequência (a nota).
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Clarinete -->
+                <article class="card instrument-card">
+                    <div class="inst-banner inst-banner-clarinet">
+                        <div class="inst-banner-top">
+                            <span class="inst-tag">Tubo Fechado</span>
+                            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/>
+                            </svg>
+                        </div>
+                        <h3>O Clarinete</h3>
+                        <p>Cilindro parcialmente fechado</p>
+                    </div>
+
+                    <div class="inst-body">
+                        <div class="inst-block">
+                            <h4>Como funciona</h4>
+                            <p>
+                                O clarinete possui uma <strong>palheta na embocadura</strong> (que funciona quase como uma extremidade fechada no ponto de pressão) e abre-se na campana, comportando-se acusticamente como um <strong>tubo cilíndrico fechado</strong> em uma das extremidades.
+                            </p>
+                        </div>
+
+                        <div class="inst-block">
+                            <h4>Timbre</h4>
+                            <p>
+                                Como emite apenas <strong>harmônicos ímpares</strong>, o timbre do clarinete é mais <strong>oco, aveludado e distinto</strong> em relação aos instrumentos de tubo aberto.
+                            </p>
+                        </div>
+
+                        <div class="inst-block">
+                            <h4>Controle</h4>
+                            <p>
+                                Quando o clarinetista aciona a chave de registro, ele força o instrumento a saltar não para o segundo harmônico (como na flauta ou saxofone), mas sim para o <strong>terceiro harmônico</strong> (uma duodécima acima), característica direta da assimetria do tubo fechado.
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Órgão de Tubos -->
+                <article class="card instrument-card">
+                    <div class="inst-banner inst-banner-organ">
+                        <div class="inst-banner-top">
+                            <span class="inst-tag">Tubos Abertos e Fechados</span>
+                            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 20V6m4 14V4m4 16V8m4 12V5m4 15V9M2 20h20"/>
+                            </svg>
+                        </div>
+                        <h3>O Órgão de Tubos</h3>
+                        <p>Mistura de tubos abertos e fechados</p>
+                    </div>
+
+                    <div class="inst-body">
+                        <div class="inst-block">
+                            <h4>Como funciona</h4>
+                            <p>
+                                O órgão utiliza um sistema de registros com <strong>tubos de diferentes materiais, formatos e comprimentos</strong>.
+                            </p>
+                        </div>
+
+                        <div class="inst-block">
+                            <h4>Vantagens Práticas</h4>
+                            <div class="organ-sublist">
+                                <div class="organ-subitem-gray">
+                                    <strong>Tubos Fechados (Graves Compactos)</strong>
+                                    Registros como <em>Gedeckt</em> ou <em>Bourdon</em> são muito utilizados para notas graves (registros de 16 pés), pois emitem uma frequência <strong>uma oitava abaixo usando a metade do tamanho físico</strong> de um tubo aberto, economizando espaço monumental dentro das catedrais e igrejas.
+                                </div>
+                                <div class="organ-subitem-blue">
+                                    <strong>Tubos Abertos (Brilho Sonoro)</strong>
+                                    Trazem o brilho e os harmônicos superiores necessários para preencher o ambiente acústico.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <span class="footer-dot"></span>
+                        <span>AcústicaFísica</span>
+                    </div>
+                    <p>
+                        Página educativa dedicada ao estudo de Tubos Sonoros, Ondas Estacionárias e suas aplicações práticas nos instrumentos musicais de sopro.
+                    </p>
+                </div>
+
+                <div>
+                    <h4>Autores do Conteúdo</h4>
+                    <ul class="footer-list">
+                        <li><strong>Felipe:</strong> O que são Tubos Sonoros &amp; Tubos Fechados</li>
+                        <li><strong>Capot:</strong> Como se formam os nós e ventres</li>
+                        <li><strong>Thayla &amp; Danilo:</strong> Relação entre comprimento do tubo e nota musical</li>
+                        <li><strong>Rafa:</strong> Aplicação em instrumentos de sopro (flauta, clarinete, órgão)</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Fontes Bibliográficas</h4>
+                    <ul class="footer-list">
+                        <li>
+                            <a href="https://mundoeducacao.uol.com.br/fisica/tubos-sonoros.htm" target="_blank" rel="noopener noreferrer">
+                                Mundo Educação — Tubos Sonoros (UOL)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://brasilescola.uol.com.br/fisica/ondas-estacionarias.htm" target="_blank" rel="noopener noreferrer">
+                                Brasil Escola — Ondas Estacionárias (UOL)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>Física Ondulatória • Tubos Sonoros Abertos e Fechados</span>
+                <span>Desenvolvido exclusivamente com HTML5 e CSS3</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
